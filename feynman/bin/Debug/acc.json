@@ -1,0 +1,20 @@
+{
+"AccountList":[
+{ 
+	"Name":"Barclasy",
+	"Credentials":
+		{	"username":"mt82uk",
+			"password":"pips"
+		},
+	"Index":0
+},
+{
+	"Name":"pap",
+	"Credentials":
+	{	"username":"mt82uk",
+		"password":"pipspispis",
+		"email":"poop"
+	},
+	"Index":1
+}
+]}

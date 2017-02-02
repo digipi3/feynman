@@ -242,6 +242,26 @@ namespace feynman
             }
         }
 
+        private void CreateTime()
+        {
+            Mode = MODE.CREATE;
+
+            // Set interface stuff:
+            tbAccountName.Text = "";
+            panEdit.Margin = panMain.Margin;
+            Panel editPanel = this.panCreate;
+            editPanel.Children.Clear();
+
+            // Add one entry panel:
+            Panel panel = GetEntryPanel("","");
+            editPanel.Children.Add(panel);
+
+            // Let's actually create the accout for real:
+            // while listening to Benny Benassi ft. Gary Go - Cinema
+
+           
+        }
+
         private void btnView_Click(object sender, RoutedEventArgs e)
         {
             RefreshInterface();
@@ -277,35 +297,36 @@ namespace feynman
             Save();
         }
 
-        private void Save()
+        private bool Save()
         {
             string accountName = tbAccountName.Text;
+            Dictionary<string, string> details;
 
             if (Mode == MODE.CREATE)
             {
-                if (CredManager.DoesAccountNameExist(accountName))
+                // Check account name:
+                if( String.IsNullOrEmpty( accountName ) )
                 {
-                    MessageBox.Show("An account with that name already exists.");
-                    return;
+                    MessageBox.Show("You need to an account name, thank you.");
+                    return false;
+                }
+
+                details = ExtractEntries();
+                if( details.Count == 0 )
+                {
+                    MessageBox.Show("You need to enter some details, thank you.");
+                    return false;
+                }
+
+                if( CredManager.CreateAccount(accountName, details) == false ){
+                    return false;
                 }
             }
-
-            // Get Entries:
-            Dictionary<string, string> details = ExtractEntries();
-
-            // If Editing then the existing account needs to go:
-            // Replace
-
-            if( Mode == MODE.EDIT )
+            else if( Mode == MODE.EDIT )
             {
+                details = ExtractEntries();
                 CredManager.Replace(accountName, details);
-            }
-            else if( Mode == MODE.CREATE )
-            {
-                CredManager.AddAccount(accountName, details);
-            }            
-
-            //ExtractEntriesAndSave();
+            }          
 
             cbxAccNames.Items.Clear();
 
@@ -313,7 +334,8 @@ namespace feynman
 
             cbxAccNames.SelectedItem = accountName;
 
-            Mode = MODE.VIEW;
+            return true;
+
        }
 
         public Dictionary<string,string> ExtractEntries()
@@ -341,7 +363,12 @@ namespace feynman
                         }
                     }
                 }
-                details.Add(key, val);
+
+                // We'll only add details if the key exists in some formS
+                if (!String.IsNullOrEmpty(key) )
+                {
+                    details.Add(key, val);
+                }
             }
 
             return details;
@@ -354,18 +381,36 @@ namespace feynman
 
         private void btnBack_Click(object sender, RoutedEventArgs e)
         {
+            // Does the user want to save the changes or cancel?
+
+            MessageBoxResult messageBoxResult = System.Windows.MessageBox.Show("Do you want to save your account?", "Save Confirmation", System.Windows.MessageBoxButton.YesNo);
+
+            if (messageBoxResult == MessageBoxResult.Yes )
+            {
+                if ( Save() )
+                {
+                    SwitchToViewMode();
+                }
+            }
+            else
+            {
+                SwitchToViewMode();
+            }
+        }
+
+        private void btnCreateAccount_Click(object sender, RoutedEventArgs e)
+        {
+            CreateTime();
+        }
+
+        private void SwitchToViewMode()
+        {
             // Move the panel out of the way to reveal the main screen.
             Thickness marg = panEdit.Margin;
             marg.Left = 500;
             panEdit.Margin = marg;
 
-            Save();
-        }
-
-        private void btnCreateAccount_Click(object sender, RoutedEventArgs e)
-        {
-            Mode = MODE.CREATE;
-
+            Mode = MODE.VIEW;
         }
     }
 }

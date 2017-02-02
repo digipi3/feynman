@@ -58,8 +58,13 @@ namespace feynman
             }
         }
 
-        public void AddAccount( string accountName, Dictionary<string,string> credentials )
+        public bool CreateAccount( string accountName, Dictionary<string,string> credentials )
         {
+            if( DoesAccountNameExist(accountName) )
+            {
+                return false;
+            }
+
             Account acc = new Account();
             acc.Name = accountName;
             acc.Index = GetEpoch();
@@ -71,6 +76,8 @@ namespace feynman
             UserAccs.AccountList.Add(acc);
 
             CurrentAccount = acc;
+
+            return true;
         }
 
         public void Replace(string accountName, Dictionary<string,string> details )
@@ -82,7 +89,7 @@ namespace feynman
 
             UserAccs.AccountList.Remove(CurrentAccount);
 
-            AddAccount(accountName, details);
+            CreateAccount(accountName, details);
         }
 
         public int GetEpoch()

@@ -32,7 +32,7 @@
             <StackPanel Height="270" VerticalAlignment="Top" x:Name="panCreate" Background="#FF3158C1" Margin="20,20,20,0"/>
             <StackPanel x:Name="panEditControls" HorizontalAlignment="Left" Height="63" VerticalAlignment="Top" Width="264" Orientation="Horizontal" Margin="20,0,0,0">
                 <Button x:Name="btnBack" Content="&lt;" HorizontalAlignment="Left" VerticalAlignment="Top" Width="46" Height="40" Background="#FF8EA5F7" FontFamily="Calibri" FontSize="20" BorderThickness="2" BorderBrush="#FF283C80" Margin="0,10,0,0" Click="btnBack_Click"/>
-                <Button x:Name="btnAddEntry" Content="Add Entry" HorizontalAlignment="Left" VerticalAlignment="Top" Width="132" Click="btnAddEntry_Click" Height="40" Background="#FF8EA5F7" FontFamily="Calibri" FontSize="20" BorderThickness="2" BorderBrush="#FF283C80" Margin="10,10,0,0"/>
+                <Button x:Name="btnAddEntry" Content="Add Entry" HorizontalAlignment="Left" VerticalAlignment="Top" Width="106" Click="btnAddEntry_Click" Height="40" Background="#FF8EA5F7" FontFamily="Calibri" FontSize="20" BorderThickness="2" BorderBrush="#FF283C80" Margin="10,10,0,0"/>
             </StackPanel>
         </StackPanel>
     </Grid>

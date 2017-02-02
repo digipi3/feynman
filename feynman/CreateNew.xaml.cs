@@ -117,7 +117,7 @@ namespace feynman
                 details.Add(key, val);
             }
 
-            feynman.MainWindow.CredManager.AddAccount(tbAccountName.Text, details);    
+            feynman.MainWindow.CredManager.CreateAccount(tbAccountName.Text, details);    
         }
 
         public void PopulateWithExisting()

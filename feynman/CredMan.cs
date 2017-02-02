@@ -104,6 +104,11 @@ namespace feynman
 
         public void Save()
         {
+            if( File.Exists(Path))
+            {
+                File.Delete(Path);
+            }
+
             // serialize JSON directly to a file
             using (StreamWriter file = File.CreateText(Path))
             {
@@ -168,6 +173,42 @@ namespace feynman
                 }
             }
             return false;
+        }
+
+        public void RemoveAccount(string accountName )
+        {
+            Account accountToRemove = null;
+
+            foreach (Account acc in UserAccs.AccountList)
+            {
+                if (accountName == acc.Name)
+                {
+                    accountToRemove = acc;
+                    break;
+                }
+            }
+
+            if (accountToRemove != null)
+            {
+                UserAccs.AccountList.Remove(accountToRemove);    
+                
+                if( CurrentAccount == accountToRemove )
+                {
+                    if (UserAccs.AccountList.Count > 0 )
+                    {
+                        CurrentAccount = UserAccs.AccountList[0];
+                    }
+                    else
+                    {
+                        CurrentAccount = null;
+                    }
+                }
+            }
+        }
+
+        public void CleanUp()
+        {
+            Save();
         }
     }
 }

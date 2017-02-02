@@ -38,6 +38,8 @@ namespace feynman
 
         MODE Mode = MODE.VIEW;
 
+        bool SomethingChanged = false;
+
         public MainWindow()
         {
             InitializeComponent();
@@ -52,6 +54,8 @@ namespace feynman
             RefreshInterface();
 
             cbxAccNames.SelectedIndex = 0;
+
+            this.Width = panMain.Width + 40;            
         }
 
         private void cbxAccNames_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -85,7 +89,12 @@ namespace feynman
 
         private void SetCredentials( Account acc )
         {
-            this.panCreds.Children.Clear();            
+            this.panCreds.Children.Clear();   
+            
+            if( acc == null)
+            {
+                return;
+            }         
 
             foreach (KeyValuePair<string, string> entry in acc.Credentials)
             {
@@ -222,10 +231,19 @@ namespace feynman
         private void EditTime()
         {
             Mode = MODE.EDIT;
+            SomethingChanged = false;
+
+            if( cbxAccNames.SelectedItem == null )
+            {
+                return;
+            }
+
 
             // Empty the panel and add text boxes for editing.
             tbAccountName.Text = cbxAccNames.SelectedItem.ToString();
             panEdit.Margin = panMain.Margin;
+            panEdit.Width = panMain.Width;
+
             Panel editPanel = this.panCreate;
             editPanel.Children.Clear();           
 
@@ -254,12 +272,7 @@ namespace feynman
 
             // Add one entry panel:
             Panel panel = GetEntryPanel("","");
-            editPanel.Children.Add(panel);
-
-            // Let's actually create the accout for real:
-            // while listening to Benny Benassi ft. Gary Go - Cinema
-
-           
+            editPanel.Children.Add(panel);      
         }
 
         private void btnView_Click(object sender, RoutedEventArgs e)
@@ -290,6 +303,8 @@ namespace feynman
             Panel pan = (Panel)((Button)sender).Parent;
 
             this.panCreate.Children.Remove(pan);
+
+            SomethingChanged = true;
         }
 
         private void btnSaveAccount_Click(object sender, RoutedEventArgs e)
@@ -411,6 +426,31 @@ namespace feynman
             panEdit.Margin = marg;
 
             Mode = MODE.VIEW;
+        }
+
+        private void btnDelete_Click(object sender, RoutedEventArgs e)
+        {
+            string accountName = cbxAccNames.SelectedItem.ToString();
+
+            if( Mode == MODE.VIEW )
+            {
+                MessageBoxResult messageBoxResult = System.Windows.MessageBox.Show(String.Format("Are you sure you want to delete {0}", accountName), "Delete Confirmation", System.Windows.MessageBoxButton.YesNo);
+
+                if (messageBoxResult == MessageBoxResult.Yes)
+                {
+                    CredManager.RemoveAccount(accountName);
+                }
+
+                cbxAccNames.Items.Clear();
+                RefreshInterface();
+                cbxAccNames.SelectedIndex = 0;
+            }
+
+        }
+
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            CredManager.CleanUp();
         }
     }
 }

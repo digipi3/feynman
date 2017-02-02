@@ -7,6 +7,9 @@ using Newtonsoft;
 using System.Collections;
 using System.IO;
 using Newtonsoft.Json;
+using System.Security;
+using System.Security.Cryptography;
+using System.Runtime.InteropServices;
 
 namespace feynman
 {
@@ -31,7 +34,7 @@ namespace feynman
         public void Load()
         {
             Path = "acc.json";
-            LoadFile();
+            LoadFile("blade");
 
             if( UserAccs.AccountList.Count > 0 )
             {
@@ -102,12 +105,57 @@ namespace feynman
             return secondsSinceEpoch;
         }
 
-        public void Save()
+        public void Save(string password)
         {
             if( File.Exists(Path))
             {
                 File.Delete(Path);
             }
+
+            // 64 bits is the only valid key size for the DES encryption algorithm.
+            // ASCII encoding uses 8 bits per character, therefore 8 ASCII characters == 64 bits.
+
+            password = "cheesecheese";
+
+            if( password.Length < 8 )
+            {
+                int dif = 8 - password.Length;
+
+                for (int i = 0; i < dif; i++)
+                {
+                    password += i.ToString();
+
+                }
+            }
+
+            if( password.Length > 8 )
+            {
+                password = password.Remove(8, password.Length - 8);
+            }
+
+        
+
+            DESCryptoServiceProvider DES = new DESCryptoServiceProvider();
+            DES.Key = ASCIIEncoding.ASCII.GetBytes(password);
+            DES.IV = ASCIIEncoding.ASCII.GetBytes(password);
+
+            FileStream fsEncrypted = new FileStream(Path, FileMode.Create, FileAccess.Write);
+
+            ICryptoTransform desencrypt = DES.CreateEncryptor();
+
+            CryptoStream cryptostream = new CryptoStream(fsEncrypted, desencrypt, CryptoStreamMode.Write);
+
+            string json = JsonConvert.SerializeObject(UserAccs, Formatting.Indented);
+
+            byte[] bytearrayinput = Encoding.ASCII.GetBytes(json);
+
+            cryptostream.Write(bytearrayinput, 0, bytearrayinput.Length);
+
+            cryptostream.Close();
+
+            return;
+
+
 
             // serialize JSON directly to a file
             using (StreamWriter file = File.CreateText(Path))
@@ -115,11 +163,27 @@ namespace feynman
                 JsonSerializer serializer = new JsonSerializer();
                 serializer.Serialize(file, UserAccs);
             }
+
+            EncryptFile(Path, Path, password);
         }
 
-        public void LoadFile()
+
+        public void LoadFile(string password)
         {
-            UserAccs = JsonConvert.DeserializeObject<UserAccounts>(File.ReadAllText(Path));
+            if (File.Exists(Path) == true)
+            {
+                UserAccs = JsonConvert.DeserializeObject<UserAccounts>(File.ReadAllText(Path));
+            }
+            else
+            {
+                UserAccs = new UserAccounts();
+                UserAccs.AccountList = new List<Account>();
+
+                Account acc = new Account();
+                acc.Name = "Blank";
+
+                UserAccs.AccountList.Add(acc);
+            }
         }
 
         public Account GetCurrentAccount()
@@ -208,7 +272,57 @@ namespace feynman
 
         public void CleanUp()
         {
-            Save();
+            Save("blade");
+        }
+
+        private void EncryptFile(string sInputFilename, string sOutputFilename, string sKey)
+        {
+            FileStream fsInput = new FileStream(sInputFilename, FileMode.Open, FileAccess.Read);
+            FileStream fsEncrypted = new FileStream(sOutputFilename, FileMode.Create, FileAccess.Write);
+            
+            DESCryptoServiceProvider DES = new DESCryptoServiceProvider();
+            DES.Key = ASCIIEncoding.ASCII.GetBytes(sKey);
+            DES.IV = ASCIIEncoding.ASCII.GetBytes(sKey);
+
+            ICryptoTransform desencrypt = DES.CreateEncryptor();
+            CryptoStream cryptostream = new CryptoStream(fsEncrypted, desencrypt, CryptoStreamMode.Write);
+
+            byte[] bytearrayinput = new byte[fsInput.Length];
+            fsInput.Read(bytearrayinput, 0, bytearrayinput.Length);
+
+            cryptostream.Write(bytearrayinput, 0, bytearrayinput.Length);
+
+            cryptostream.Close();
+            fsInput.Close();
+            fsEncrypted.Close();
+        }
+
+        private void DecryptFile(string sInputFilename, 
+            string sOutputFilename, string sKey)
+        {
+            DESCryptoServiceProvider DES = new DESCryptoServiceProvider();
+            //A 64 bit key and IV is required for this provider.
+            //Set secret key For DES algorithm.
+            DES.Key = ASCIIEncoding.ASCII.GetBytes(sKey);
+            //Set initialization vector.
+            DES.IV = ASCIIEncoding.ASCII.GetBytes(sKey);
+
+            //Create a file stream to read the encrypted file back.
+            FileStream fsread = new FileStream(sInputFilename,
+               FileMode.Open,
+               FileAccess.Read);
+            //Create a DES decryptor from the DES instance.
+            ICryptoTransform desdecrypt = DES.CreateDecryptor();
+            //Create crypto stream set to read and do a 
+            //DES decryption transform on incoming bytes.
+            CryptoStream cryptostreamDecr = new CryptoStream(fsread,
+               desdecrypt,
+               CryptoStreamMode.Read);
+            //Print the contents of the decrypted file.
+            StreamWriter fsDecrypted = new StreamWriter(sOutputFilename);
+            fsDecrypted.Write(new StreamReader(cryptostreamDecr).ReadToEnd());
+            fsDecrypted.Flush();
+            fsDecrypted.Close();
         }
     }
 }

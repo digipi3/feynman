@@ -5,8 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:feynman"
         mc:Ignorable="d"
-        Title="Feynman Password Manager" Height="485.549" Width="1069.636" Closing="Window_Closing">
-    <Grid x:Name="grdMain" Background="#FF0D276C" Margin="0,0,-8,-2">
+        Title="Feynman Password Manager" Height="501.549" Width="1069.636" Closing="Window_Closing">
+    <Grid x:Name="grdMain" Background="#FF0D276C" Margin="0,0,-8,-649">
         <StackPanel x:Name="panEntry" Height="40" VerticalAlignment="Top" Orientation="Horizontal" Margin="548,480,0,0" HorizontalAlignment="Left" Width="441">
             <TextBox x:Name="tbKey" Height="23" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" RenderTransformOrigin="1.241,-3.264" Margin="10,10,0,0" HorizontalAlignment="Left" Width="150" FontSize="16" FontFamily="Calibri" Uid="key"/>
             <TextBox x:Name="tbValue" Height="23" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" RenderTransformOrigin="1.241,-3.264" Margin="10,10,0,0" HorizontalAlignment="Left" Width="150" FontSize="16" FontFamily="Calibri" Uid="value"/>
@@ -16,7 +16,7 @@
             <ComboBox x:Name="cbxAccNames" VerticalAlignment="Top" Height="41" FontSize="16" FontFamily="Segoe UI Semibold" SelectionChanged="cbxAccNames_SelectionChanged" IsReadOnly="True" FontWeight="Bold" Foreground="#FF0A0A0A" BorderBrush="White" BorderThickness="2" Background="{x:Null}" Margin="19,20,19,0"/>
             <StackPanel Height="270" VerticalAlignment="Top" x:Name="panCreds" Margin="20,20,20,0">
 
-                <Button x:Name="btnValueCopy" Content="Value" HorizontalAlignment="Center" VerticalAlignment="Center" Width="124" Click="btnEditAccount_Click" Height="31" Background="{x:Null}" FontFamily="Calibri" FontSize="16" BorderThickness="2" BorderBrush="White" Margin="68,5" Foreground="White"/>
+                <Button x:Name="btnValueCopy" Content="Value" HorizontalAlignment="Center" VerticalAlignment="Center" Width="124" Click="btnEditAccount_Click" Height="31" Background="#FF8EA5F7" FontFamily="Calibri" FontSize="16" BorderThickness="2" BorderBrush="#FF283C80" Margin="68,5" Foreground="Black"/>
 
             </StackPanel>
             <StackPanel Height="60" VerticalAlignment="Top" x:Name="panCreds_Copy" Margin="20,0,19,0" Orientation="Horizontal" HorizontalAlignment="Center" Width="417">
@@ -26,15 +26,20 @@
             </StackPanel>
         </StackPanel>
         <StackPanel x:Name="panEdit" HorizontalAlignment="Left" Height="434" Margin="509,10,0,0" VerticalAlignment="Top" Width="507" Background="#FF1B1F46">
-            <StackPanel Height="64" Margin="0">
-                <Label x:Name="lblAccountName" Content="Account Name:" HorizontalAlignment="Left" VerticalAlignment="Top" Width="146" FontFamily="Calibri" Foreground="#FFFFE6E6" Margin="5,0,0,0" Height="22"/>
-                <TextBox x:Name="tbAccountName" HorizontalAlignment="Center" Height="36" TextWrapping="Wrap" Text="..." VerticalAlignment="Top" Width="265" FontFamily="Calibri" FontSize="22" Background="{x:Null}" Foreground="#FFFFF5F5" BorderBrush="#FF395ABD" BorderThickness="2" Margin="20,0,19,0" FontWeight="Bold"/>
+            <StackPanel Height="64" Margin="20,0" VerticalAlignment="Center">
+                <Label x:Name="lblAccountName" Content="Account Name:" HorizontalAlignment="Left" VerticalAlignment="Top" Width="88" FontFamily="Calibri" Foreground="#FFFFE6E6" Margin="5,0,0,0" Height="26"/>
+                <TextBox x:Name="tbAccountName" Height="26" TextWrapping="Wrap" Text="TextBox" Margin="38,0,39,0" FontSize="16" FontFamily="Segoe UI Semibold"/>
             </StackPanel>
             <StackPanel Height="270" VerticalAlignment="Top" x:Name="panCreate" Background="#FF3158C1" Margin="20,20,20,0"/>
             <StackPanel x:Name="panEditControls" HorizontalAlignment="Left" Height="63" VerticalAlignment="Top" Width="264" Orientation="Horizontal" Margin="20,0,0,0">
                 <Button x:Name="btnBack" Content="&lt;" HorizontalAlignment="Left" VerticalAlignment="Top" Width="46" Height="40" Background="#FF8EA5F7" FontFamily="Calibri" FontSize="20" BorderThickness="2" BorderBrush="#FF283C80" Margin="0,10,0,0" Click="btnBack_Click"/>
                 <Button x:Name="btnAddEntry" Content="Add Entry" HorizontalAlignment="Left" VerticalAlignment="Top" Width="106" Click="btnAddEntry_Click" Height="40" Background="#FF8EA5F7" FontFamily="Calibri" FontSize="20" BorderThickness="2" BorderBrush="#FF283C80" Margin="10,10,0,0"/>
             </StackPanel>
+        </StackPanel>
+        <StackPanel x:Name="panPassword" Height="467" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="10,470,588,183" Width="472" Orientation="Vertical" Background="#FF1B1F46">
+            <Label FontFamily="Calibri" x:Name="lblPassword" Content="Password:" HorizontalAlignment="Left" Margin="0,34,0,0" VerticalAlignment="Top" Width="324" Foreground="White" Height="31"/>
+            <TextBox x:Name="tbPassword" TextWrapping="Wrap" Text="TextBox" Width="214" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="60,0,50,0" Height="29" FontSize="16" FontFamily="Segoe UI Semibold"/>
+            <Button x:Name="btnPassword" Content="Go" HorizontalAlignment="Center" VerticalAlignment="Top" Width="100" Height="40" Background="#FF8EA5F7" FontFamily="Calibri" FontSize="20" BorderThickness="2" BorderBrush="#FF283C80" Margin="112,10,112,0" Click="btnPassword_Click"/>
         </StackPanel>
     </Grid>
 </Window>

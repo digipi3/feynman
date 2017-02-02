@@ -34,7 +34,7 @@ namespace feynman
     {
         public static CredMan CredManager = new CredMan();
 
-        enum MODE { VIEW, EDIT, CREATE };
+        enum MODE { VIEW, EDIT, CREATE, PASSWORD };
 
         MODE Mode = MODE.VIEW;
 
@@ -55,8 +55,10 @@ namespace feynman
 
             cbxAccNames.SelectedIndex = 0;
 
-            this.Width = panMain.Width + 40;            
-        }
+            this.Width = panMain.Width + 40;
+
+            SwitchToPasswordMode();
+        }  
 
         private void cbxAccNames_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {    
@@ -451,6 +453,21 @@ namespace feynman
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
             CredManager.CleanUp();
+        }
+
+        private void SwitchToPasswordMode()
+        {
+            Mode = MODE.PASSWORD;
+
+            panPassword.Margin = panMain.Margin;
+            panPassword.Width = panMain.Width;
+            panPassword.Height = panMain.Height;
+           
+        }
+
+        private void btnPassword_Click(object sender, RoutedEventArgs e)
+        {
+            string password = tbPassword.Text;
         }
     }
 }

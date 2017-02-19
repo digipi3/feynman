@@ -44,6 +44,8 @@ namespace feynman
         {
             InitializeComponent();
 
+            CredManager.TestEncryption();
+
             this.grdMain.Background = Theme.BackgroundBrushColor;
             this.panCreds.Background = Theme.PanelBrushColor;
             this.panCreate.Background = Theme.PanelBrushColor;

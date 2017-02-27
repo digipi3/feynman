@@ -5,8 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:feynman"
         mc:Ignorable="d"
-        Title="Feynman Password Manager" Height="501.549" Width="1069.636" Closing="Window_Closing">
-    <Grid x:Name="grdMain" Background="#FF0D276C" Margin="0,0,-8,-649">
+        Title="Feynman Password Manager" Height="567.549" Width="1528.636" Closing="Window_Closing">
+    <Grid x:Name="grdMain" Background="#FF0D276C" Margin="0,0,-8,0" Height="1398" VerticalAlignment="Top">
         <StackPanel x:Name="panEntry" Height="40" VerticalAlignment="Top" Orientation="Horizontal" Margin="548,480,0,0" HorizontalAlignment="Left" Width="441">
             <TextBox x:Name="tbKey" Height="23" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" RenderTransformOrigin="1.241,-3.264" Margin="10,10,0,0" HorizontalAlignment="Left" Width="150" FontSize="16" FontFamily="Calibri" Uid="key"/>
             <TextBox x:Name="tbValue" Height="23" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" RenderTransformOrigin="1.241,-3.264" Margin="10,10,0,0" HorizontalAlignment="Left" Width="150" FontSize="16" FontFamily="Calibri" Uid="value"/>
@@ -36,7 +36,7 @@
                 <Button x:Name="btnAddEntry" Content="Add Entry" HorizontalAlignment="Left" VerticalAlignment="Top" Width="106" Click="btnAddEntry_Click" Height="40" Background="#FF8EA5F7" FontFamily="Calibri" FontSize="20" BorderThickness="2" BorderBrush="#FF283C80" Margin="10,10,0,0"/>
             </StackPanel>
         </StackPanel>
-        <StackPanel x:Name="panPassword" Height="467" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="10,470,588,183" Width="472" Orientation="Vertical" Background="#FF1B1F46">
+        <StackPanel x:Name="panPassword" Height="434" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="1030,10,0,0" Width="477" Orientation="Vertical" Background="#FF1B1F46">
             <Label FontFamily="Calibri" x:Name="lblPassword" Content="Password:" HorizontalAlignment="Left" Margin="0,34,0,0" VerticalAlignment="Top" Width="324" Foreground="White" Height="31"/>
             <TextBox x:Name="tbPassword" TextWrapping="Wrap" Text="TextBox" Width="214" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="60,0,50,0" Height="29" FontSize="16" FontFamily="Segoe UI Semibold"/>
             <Button x:Name="btnPassword" Content="Go" HorizontalAlignment="Center" VerticalAlignment="Top" Width="100" Height="40" Background="#FF8EA5F7" FontFamily="Calibri" FontSize="20" BorderThickness="2" BorderBrush="#FF283C80" Margin="112,10,112,0" Click="btnPassword_Click"/>

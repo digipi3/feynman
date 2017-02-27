@@ -17,7 +17,7 @@ namespace feynman
 {
     public static class Theme
     {
-        private static Color BackgroundColor = (Color)ColorConverter.ConvertFromString("#FF1D3B5F");
+        private static Color BackgroundColor = (Color)ColorConverter.ConvertFromString("#283593");
         public static SolidColorBrush BackgroundBrushColor = new SolidColorBrush(BackgroundColor);
 
         private static Color PanelColor = (Color)ColorConverter.ConvertFromString("#FF1374B8");
@@ -44,14 +44,14 @@ namespace feynman
         {
             InitializeComponent();
 
-            CredManager.TestEncryption();
+          //  CredManager.TestEncryption();
 
             this.grdMain.Background = Theme.BackgroundBrushColor;
             this.panCreds.Background = Theme.PanelBrushColor;
             this.panCreate.Background = Theme.PanelBrushColor;
             //this.Background = Brushes.Yellow;
 
-            CredManager.Load();
+            //CredManager.Load();
 
             RefreshInterface();
 
@@ -427,7 +427,9 @@ namespace feynman
             // Move the panel out of the way to reveal the main screen.
             Thickness marg = panEdit.Margin;
             marg.Left = 500;
+
             panEdit.Margin = marg;
+            panPassword.Margin = marg;
 
             Mode = MODE.VIEW;
         }
@@ -454,7 +456,12 @@ namespace feynman
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            CredManager.CleanUp();
+            string password = tbPassword.Text;
+
+            if( CredManager.Save(password) )
+            {
+
+            }
         }
 
         private void SwitchToPasswordMode()
@@ -462,6 +469,7 @@ namespace feynman
             Mode = MODE.PASSWORD;
 
             panPassword.Margin = panMain.Margin;
+
             panPassword.Width = panMain.Width;
             panPassword.Height = panMain.Height;
            
@@ -470,6 +478,15 @@ namespace feynman
         private void btnPassword_Click(object sender, RoutedEventArgs e)
         {
             string password = tbPassword.Text;
+
+            if( CredManager.LoadFile( password ) )
+            {
+                RefreshInterface();
+
+                cbxAccNames.SelectedIndex = 0;
+
+                SwitchToViewMode();
+            }
         }
     }
 }

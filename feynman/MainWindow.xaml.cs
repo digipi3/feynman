@@ -539,7 +539,27 @@ namespace feynman
 
             if (tbCreatePassword.Text != tbCreatePasswordRepeat.Text){
                 MessageBox.Show("Your passwords do not match, they should match, sort it out");
+                return;
             }
+
+            string[] splitString = tbCreatePassword.Text.Split(' ');
+
+            if(splitString.Count() < 4)
+            {
+                MessageBox.Show("Your passwords needs to be made up of four words for security reasons");
+                return;
+            }
+
+            /*
+            foreach(string pass in splitString)
+            {
+                if (pass.Length < 3)
+                {
+                    MessageBox.Show("Your password words need to be more than two letters long.");
+                    return;
+                }
+            }
+            */
 
             CredManager.SetPassword(tbCreatePassword.Text);
             SwitchToViewMode();

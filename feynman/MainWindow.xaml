@@ -47,6 +47,7 @@
             <Label FontFamily="Calibri" x:Name="lblPasswordRepeat" Content="Repeat Password:" HorizontalAlignment="Left" Margin="0,10,0,0" VerticalAlignment="Top" Width="324" Foreground="White" Height="31"/>
             <TextBox x:Name="tbCreatePasswordRepeat" TextWrapping="Wrap" Width="214" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="136,0,127,0" Height="30" FontSize="16" FontFamily="Segoe UI Semibold"/>
             <Button x:Name="btnCreatePassword" Content="Go" HorizontalAlignment="Center" VerticalAlignment="Top" Width="100" Height="40" Background="#FF8EA5F7" FontFamily="Calibri" FontSize="20" BorderThickness="2" BorderBrush="#FF283C80" Margin="188,10,189,0" Click="btnCreatePassword_Click"/>
+            <TextBlock x:Name="textBlock" TextWrapping="Wrap" Text="Your password needs to be made up of four words for security reasons" FontFamily="Calibri" FontSize="22" Foreground="White" TextAlignment="Center" Margin="0,20,0,0"/>
         </StackPanel>
     </Grid>
 </Window>

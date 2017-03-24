@@ -34,11 +34,13 @@ namespace feynman
     {
         public static CredMan CredManager = new CredMan();
 
-        enum MODE { VIEW, EDIT, CREATE, PASSWORD };
+        enum MODE { VIEW, EDIT, CREATE, PASSWORD, CREATEPASSWORD };
 
         MODE Mode = MODE.VIEW;
 
         bool SomethingChanged = false;
+
+        Panel ActivePanel = null;
 
         public MainWindow()
         {
@@ -59,7 +61,18 @@ namespace feynman
 
             this.Width = panMain.Width + 40;
 
-            SwitchToPasswordMode();
+            /* Before switching to password mode we need to check if a password protected file even exists */
+
+            if( CredManager.DoesFileExist() )
+            {
+                SwitchToPasswordMode();
+            }
+            else
+            {
+                SwitchToCreatePasswordMode();
+            }
+
+            
         }  
 
         private void cbxAccNames_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -353,6 +366,8 @@ namespace feynman
 
             cbxAccNames.SelectedItem = accountName;
 
+            CredManager.Save();
+
             return true;
 
        }
@@ -401,20 +416,8 @@ namespace feynman
         private void btnBack_Click(object sender, RoutedEventArgs e)
         {
             // Does the user want to save the changes or cancel?
-
-            MessageBoxResult messageBoxResult = System.Windows.MessageBox.Show("Do you want to save your account?", "Save Confirmation", System.Windows.MessageBoxButton.YesNo);
-
-            if (messageBoxResult == MessageBoxResult.Yes )
-            {
-                if ( Save() )
-                {
-                    SwitchToViewMode();
-                }
-            }
-            else
-            {
-                SwitchToViewMode();
-            }
+            Save();
+            SwitchToViewMode();           
         }
 
         private void btnCreateAccount_Click(object sender, RoutedEventArgs e)
@@ -430,6 +433,7 @@ namespace feynman
 
             panEdit.Margin = marg;
             panPassword.Margin = marg;
+            panCreatePassword.Margin = marg;
 
             Mode = MODE.VIEW;
         }
@@ -454,16 +458,6 @@ namespace feynman
 
         }
 
-        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
-        {
-            string password = tbPassword.Text;
-
-            if( CredManager.Save(password) )
-            {
-
-            }
-        }
-
         private void SwitchToPasswordMode()
         {
             Mode = MODE.PASSWORD;
@@ -477,9 +471,13 @@ namespace feynman
 
         private void btnPassword_Click(object sender, RoutedEventArgs e)
         {
-            string password = tbPassword.Text;
+            if(String.IsNullOrEmpty( tbPassword.Text))
+            {
+                MessageBox.Show("Please enter a password, like..");
+                return;
+            }
 
-            if( CredManager.LoadFile( password ) )
+            if( CredManager.LoadFile( tbPassword.Text ) )
             {
                 RefreshInterface();
 
@@ -487,6 +485,43 @@ namespace feynman
 
                 SwitchToViewMode();
             }
+        }
+
+        private void SwitchToCreatePasswordMode()
+        {
+            Mode = MODE.CREATEPASSWORD;
+
+            MovePanelToFront(panCreatePassword);
+            ActivePanel = panCreatePassword;
+        }
+
+        private void MovePanelToFront(Panel pan)
+        {
+            pan.Margin = panMain.Margin;
+
+            pan.Width = panMain.Width;
+            pan.Height = panMain.Height;
+        }
+
+        private void btnCreatePassword_Click(object sender, RoutedEventArgs e)
+        {
+            // Check passwords exists and match.
+            if( String.IsNullOrEmpty(tbCreatePassword.Text) ){
+                MessageBox.Show("Please enter a password in the first entry box");
+                return;
+            }
+
+            if (String.IsNullOrEmpty(tbCreatePasswordRepeat.Text)) {
+                MessageBox.Show("Please repeat your password in the second entry box");
+                return;
+            }
+
+            if (tbCreatePassword.Text != tbCreatePasswordRepeat.Text){
+                MessageBox.Show("Your passwords do not match, they should match, sort it out");
+            }
+
+            CredManager.SetPassword(tbCreatePassword.Text);
+            SwitchToViewMode();
         }
     }
 }

@@ -28,8 +28,14 @@ namespace feynman
     public class CredMan
     {
         private UserAccounts UserAccs = new UserAccounts();
-        private string Path;
-        private Account CurrentAccount;       
+        private const string Path = "acc.json";
+        private Account CurrentAccount;
+        private string Password = null;
+        
+        public void SetPassword(string password)
+        {
+            this.Password = password;
+        }
 
         public void CreateTestCredentials()
         {
@@ -94,35 +100,7 @@ namespace feynman
             return secondsSinceEpoch;
         }
 
-        public string ConvertStringTo64Bit(string word)
-        {
-            string newWord = "";
-
-            if (word.Length == 8)
-            {
-                return word;
-            }
-
-            if (word.Length < 8)
-            {
-                int dif = 8 - word.Length;
-                newWord = word;
-
-                for (int i = 0; i < dif; i++)
-                {
-                    newWord += i.ToString();
-                }
-            }
-
-            if (word.Length > 8)
-            {
-                newWord = word.Remove(8, word.Length - 8);
-            }
-
-            return newWord;
-        }
-
-        public bool Save(string password)
+        public bool Save()
         {
             if( Path == null )
             {
@@ -136,7 +114,7 @@ namespace feynman
 
             string jsonString = JsonConvert.SerializeObject(UserAccs, Formatting.Indented);
 
-            string encryptedString = Encryption.Encrypt(jsonString, password);
+            string encryptedString = Encryption.Encrypt(jsonString, Password);
 
             StreamWriter fs = new StreamWriter(Path, false);
 
@@ -150,28 +128,15 @@ namespace feynman
 
         public bool LoadFile(string password)
         {
-            Path = "acc.json";
+            string decryptedString = ReadFileGetDecryptedString(Path, password);
 
-            if (File.Exists(Path) == true)
+            if (String.IsNullOrEmpty(decryptedString))
             {
-                string decryptedString = ReadFileGetDecryptedString(Path, password);
-                if( String.IsNullOrEmpty( decryptedString ) ) {
-                    return false;
-                }
-                UserAccs = JsonConvert.DeserializeObject<UserAccounts>(decryptedString);
-                return true;
-            }
-            else
-            {
-                UserAccs = new UserAccounts();
-                UserAccs.AccountList = new List<Account>();
-
-                Account acc = new Account();
-                acc.Name = "Blank";
-
-                UserAccs.AccountList.Add(acc);
                 return false;
             }
+            UserAccs = JsonConvert.DeserializeObject<UserAccounts>(decryptedString);
+            Password = password;
+            return true;
         }
 
         public Account GetCurrentAccount()
@@ -274,6 +239,15 @@ namespace feynman
             }
 
             return text;
+        }
+
+        public bool DoesFileExist()
+        {
+            if( File.Exists(Path) )
+            {
+                return true;
+            }
+            return false;
         }
     }
 }

@@ -1,3 +1,6 @@
+C:\Users\mark\Desktop\test\feynman\feynman\bin\Debug\feynman.exe.config
+C:\Users\mark\Desktop\test\feynman\feynman\obj\Debug\feynman.exe
+C:\Users\mark\Desktop\test\feynman\feynman\obj\Debug\feynman.pdb
 C:\Users\mark\Desktop\feynman\feynman\bin\Debug\feynman.exe.config
 C:\Users\mark\Desktop\feynman\feynman\bin\Debug\feynman.exe
 C:\Users\mark\Desktop\feynman\feynman\bin\Debug\feynman.pdb
@@ -15,6 +18,3 @@ C:\Users\mark\Desktop\feynman\feynman\obj\Debug\feynman.Properties.Resources.res
 C:\Users\mark\Desktop\feynman\feynman\obj\Debug\feynman.csproj.GenerateResource.Cache
 C:\Users\mark\Desktop\feynman\feynman\obj\Debug\feynman.exe
 C:\Users\mark\Desktop\feynman\feynman\obj\Debug\feynman.pdb
-C:\Users\mark\Desktop\test\feynman\feynman\bin\Debug\feynman.exe.config
-C:\Users\mark\Desktop\test\feynman\feynman\obj\Debug\feynman.exe
-C:\Users\mark\Desktop\test\feynman\feynman\obj\Debug\feynman.pdb

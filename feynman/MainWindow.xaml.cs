@@ -344,6 +344,10 @@ namespace feynman
                 }
 
                 details = ExtractEntries();
+                if( details == null)
+                {
+                    return false;
+                }
                 if( details.Count == 0 )
                 {
                     MessageBox.Show("You need to enter some details, thank you.");
@@ -357,6 +361,10 @@ namespace feynman
             else if( Mode == MODE.EDIT )
             {
                 details = ExtractEntries();
+                if (details == null)
+                {
+                    return false;
+                }
                 CredManager.Replace(accountName, details);
             }          
 
@@ -401,7 +409,19 @@ namespace feynman
                 // We'll only add details if the key exists in some formS
                 if (!String.IsNullOrEmpty(key) )
                 {
-                    details.Add(key, val);
+                    if( details.ContainsKey(key) )
+                    {
+                        MessageBox.Show("Sorry you have entries with the same name");
+                        return null;
+                    }
+                    try
+                    {
+                        details.Add(key, val);
+                    }
+                    catch(ArgumentException ex)
+                    {
+                        MessageBox.Show(ex.Message);
+                    }
                 }
             }
 
@@ -416,8 +436,9 @@ namespace feynman
         private void btnBack_Click(object sender, RoutedEventArgs e)
         {
             // Does the user want to save the changes or cancel?
-            Save();
-            SwitchToViewMode();           
+            if ( Save( )) {
+                SwitchToViewMode();
+            }        
         }
 
         private void btnCreateAccount_Click(object sender, RoutedEventArgs e)

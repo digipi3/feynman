@@ -17,6 +17,7 @@ namespace feynman
 {
     public static class Theme
     {
+        /*
         private static Color BackgroundColor = (Color)ColorConverter.ConvertFromString("#283593");
         public static SolidColorBrush BackgroundBrushColor = new SolidColorBrush(BackgroundColor);
 
@@ -25,6 +26,19 @@ namespace feynman
 
         private static Color ButtonColor = (Color)ColorConverter.ConvertFromString("#FF8EA5F7");
         public static SolidColorBrush ButtonBrushColor = new SolidColorBrush(ButtonColor);
+        */
+
+        private static Color BackgroundColor = Color.FromRgb(255, 255, 255);
+        public static SolidColorBrush BackgroundBrushColor = new SolidColorBrush(BackgroundColor);
+
+        private static Color PanelColor = Color.FromRgb(255, 255, 255);
+        public static SolidColorBrush PanelBrushColor = new SolidColorBrush(PanelColor);
+
+        private static Color ButtonColor = Color.FromRgb(255, 255, 255);
+        public static SolidColorBrush ButtonBackgroundColor = new SolidColorBrush(ButtonColor);
+
+        private static Color TextColor = Color.FromRgb(0, 0, 0);
+        public static SolidColorBrush ButtonTextColor = new SolidColorBrush(TextColor);
     }    
 
     /// <summary>
@@ -49,8 +63,30 @@ namespace feynman
           //  CredManager.TestEncryption();
 
             this.grdMain.Background = Theme.BackgroundBrushColor;
-            this.panCreds.Background = Theme.PanelBrushColor;
-            this.panCreate.Background = Theme.PanelBrushColor;
+
+            this.panCreds.Background =
+            this.panCreate.Background = 
+            this.panEdit.Background = 
+            this.panMain.Background =
+            this.panPassword.Background = 
+            this.panCreatePassword.Background = Theme.PanelBrushColor;
+            // Buttons
+            
+            this.btnAddEntry.Background =
+            this.btnBack.Background = 
+            this.btnCreateAccount.Background = 
+            this.btnCreatePassword.Background = 
+            this.btnDelete.Background =
+            this.btnEditAccount.Background = 
+            this.btnRemove.Background =
+            this.btnValueCopy.Background =
+            this.btnPassword.Background = Theme.ButtonBackgroundColor;
+
+            // Labels
+            this.lblSelectAccount.Foreground =
+            this.lblPassword.Foreground = Theme.ButtonTextColor;
+
+
             //this.Background = Brushes.Yellow;
 
             //CredManager.Load();
@@ -233,7 +269,7 @@ namespace feynman
             remove.Margin = btnRemove.Margin;
             remove.FontSize = btnRemove.FontSize;
             remove.FontFamily = btnRemove.FontFamily;
-            remove.Background = Theme.ButtonBrushColor;// ButtonBrushColor;
+            remove.Background = Theme.ButtonBackgroundColor;// ButtonBrushColor;
             remove.Click += btnRemove_Click;
 
             panel.Children.Add(keyTextBox);

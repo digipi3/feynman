@@ -6,17 +6,17 @@
         xmlns:local="clr-namespace:feynman"
         mc:Ignorable="d" Height="567.549" Width="2029.636" ResizeMode="NoResize" Topmost="True">
     <Grid x:Name="grdMain" Background="#FF0D276C" Margin="0,0,-8,0" Height="1398" VerticalAlignment="Top">
-        <StackPanel x:Name="panEntry" Height="43" VerticalAlignment="Top" Orientation="Horizontal" Margin="509,467,0,0" HorizontalAlignment="Left" Width="441">
-            <TextBox x:Name="tbKey" Height="22" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" RenderTransformOrigin="1.241,-3.264" Margin="10,11,0,0" HorizontalAlignment="Left" Width="150" FontSize="15" FontFamily="Calibri" Uid="key"/>
-            <TextBox x:Name="tbValue" Height="22" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" RenderTransformOrigin="1.241,-3.264" Margin="10,11,0,0" HorizontalAlignment="Left" Width="150" FontSize="15" FontFamily="Calibri" Uid="value"/>
-            <Button x:Name="btnRemove" Content="Delete" HorizontalAlignment="Left" VerticalAlignment="Top" Width="72" Margin="10,11,0,0" Height="22" FontFamily="Calibri" FontSize="15" BorderThickness="2" Background="#FF8EA5F7" BorderBrush="#FF283C80"/>
+        <StackPanel x:Name="panEntry" Height="31" VerticalAlignment="Top" Orientation="Horizontal" Margin="509,467,0,0" HorizontalAlignment="Left" Width="441">
+            <TextBox x:Name="tbKey" Height="22" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" RenderTransformOrigin="1.241,-3.264" Margin="10,5,0,0" HorizontalAlignment="Left" Width="150" FontSize="15" FontFamily="Calibri" Uid="key"/>
+            <TextBox x:Name="tbValue" Height="22" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" RenderTransformOrigin="1.241,-3.264" Margin="10,5,0,0" HorizontalAlignment="Left" Width="150" FontSize="15" FontFamily="Calibri" Uid="value"/>
+            <Button x:Name="btnRemove" Content="Delete" HorizontalAlignment="Left" VerticalAlignment="Top" Width="72" Margin="10,5,0,0" Height="22" FontFamily="Calibri" FontSize="15" BorderThickness="2" Background="#FF8EA5F7" BorderBrush="#FF283C80"/>
         </StackPanel>
         <StackPanel x:Name="panMain" HorizontalAlignment="Left" Height="434" Margin="10,10,0,0" VerticalAlignment="Top" Width="472" Background="#FF1B1F46">
             <Label x:Name="lblSelectAccount" Content="Select Account:" HorizontalAlignment="Left" VerticalAlignment="Top" Width="190" FontFamily="Calibri" Foreground="#FFFFE6E6" Margin="5,0,0,0" Height="36" FontSize="22"/>
             <ComboBox x:Name="cbxAccNames" VerticalAlignment="Top" Height="35" FontSize="22" FontFamily="Calibri" SelectionChanged="cbxAccNames_SelectionChanged" IsReadOnly="True" FontWeight="Bold" Foreground="#FF0A0A0A" BorderBrush="White" BorderThickness="2" Background="{x:Null}" Margin="19,10,19,0"/>
             <StackPanel Height="270" VerticalAlignment="Top" x:Name="panCreds" Margin="20,20,20,0">
 
-                <Button x:Name="btnValueCopy" Content="Value" HorizontalAlignment="Center" VerticalAlignment="Center" Width="333" Click="btnEditAccount_Click" Height="40" Background="#FF8EA5F7" FontFamily="Calibri" FontSize="15" BorderThickness="2" BorderBrush="#FF283C80" Margin="56,5,43,5" Foreground="Black"/>
+                <Button x:Name="btnValueCopy" Content="Value" HorizontalAlignment="Center" VerticalAlignment="Center" Width="333" Click="btnEditAccount_Click" Height="28" Background="#FF8EA5F7" FontFamily="Calibri" FontSize="15" BorderThickness="2" BorderBrush="#FF283C80" Margin="56,5,43,5" Foreground="Black"/>
 
             </StackPanel>
             <StackPanel Height="60" VerticalAlignment="Top" x:Name="panCreds_Copy" Margin="20,0,19,0" Orientation="Horizontal" HorizontalAlignment="Center" Width="417">

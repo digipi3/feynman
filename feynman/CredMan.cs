@@ -37,25 +37,6 @@ namespace feynman
             this.Password = password;
         }
 
-        public void CreateTestCredentials()
-        {
-            Account acc = new Account();
-            acc.Name = "Barclasy";
-            acc.Credentials.Add("username", "mt82uk");
-            acc.Credentials.Add("password", "pips");
-
-            UserAccs.AccountList.Add(acc);
-
-            string json = JsonConvert.SerializeObject(UserAccs, Formatting.Indented);
-
-            // serialize JSON directly to a file
-            using (StreamWriter file = File.CreateText(Path))
-            {
-                JsonSerializer serializer = new JsonSerializer();
-                serializer.Serialize(file, UserAccs);
-            }
-        }
-
         public bool CreateAccount(string accountName, Dictionary<string, string> credentials)
         {
             if (DoesAccountNameExist(accountName))
@@ -147,18 +128,6 @@ namespace feynman
         public List<Account> GetAccounts()
         {
             return this.UserAccs.AccountList;
-        }
-
-        public List<string> GetAccountNames()
-        {
-            List<string> names = new List<string>();
-
-            foreach (Account acc in UserAccs.AccountList)
-            {
-                names.Add(acc.Name);
-            }
-
-            return names;
         }
 
         public Account GetAndSetCurrent(string accountName)

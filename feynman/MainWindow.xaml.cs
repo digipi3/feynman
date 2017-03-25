@@ -84,7 +84,10 @@ namespace feynman
 
             // Labels
             this.lblSelectAccount.Foreground =
-            this.lblPassword.Foreground = Theme.ButtonTextColor;
+            this.lblPassword.Foreground =
+            this.lblNewPassword.Foreground =
+            this.tbPasswordHint.Foreground =
+            this.lblNewPasswordRepeat.Foreground = Theme.ButtonTextColor;
 
 
             //this.Background = Brushes.Yellow;

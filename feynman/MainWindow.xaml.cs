@@ -80,9 +80,12 @@ namespace feynman
             this.btnEditAccount.Background = 
             this.btnRemove.Background =
             this.btnValueCopy.Background =
+            this.btnDiscard.Background =
+            this.btnDump.Background =
             this.btnPassword.Background = Theme.ButtonBackgroundColor;
 
             // Labels
+            this.lblAccountName.Foreground =
             this.lblSelectAccount.Foreground =
             this.lblPassword.Foreground =
             this.lblNewPassword.Foreground =
@@ -137,9 +140,18 @@ namespace feynman
 
             // Set the combo box wuth the names of the accounts
             List<Account> accs = CredManager.GetAccounts();
+            List<string> accounts = new List<string>();
+
             foreach (Account ac in accs)
             {
-                cbxAccNames.Items.Add(ac.Name);                
+                accounts.Add(ac.Name);
+            }
+
+            accounts.Sort();
+
+            foreach (string ac in accounts)
+            {
+                cbxAccNames.Items.Add(ac);            
             }           
         }
 
@@ -602,6 +614,18 @@ namespace feynman
 
             CredManager.SetPassword(tbCreatePassword.Text);
             SwitchToViewMode();
+        }
+
+        private void btnDiscard_Click(object sender, RoutedEventArgs e)
+        {  
+            if(MessageBox.Show("Are you sure you want to discard your changes?", "Question", MessageBoxButton.YesNo, MessageBoxImage.Warning) == MessageBoxResult.Yes)
+            {
+                cbxAccNames.Items.Clear();
+
+                RefreshInterface();
+
+                SwitchToViewMode();
+            } 
         }
     }
 }
